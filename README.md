@@ -4,7 +4,7 @@ Easily build routes for an express.js web app. Inspired a little by rails.
 
 # Installation
 
-npm install resource-routes --save
+npm install resource-routing --save
 
 # Usage
 
@@ -65,8 +65,12 @@ Will build the 14 standard restful routes for you:
 
 If the controller does not exist, the routes will not be created.
 
-If a specific expected method on the controller do not exist, the 
-relevant route will not get created.
+If a specific expected attribute on the controller do not exist or is not a function, 
+the relevant route will not get created.
+
+The functions should be defined as normal express request handlers:
+
+    function(req, res) {};
 
 # nested resources
 Nested resources are supported. By passing more than the minimum number of paramaters, the extra
@@ -74,9 +78,9 @@ strings are assumed to be parent resources. For example, a call like:
 
     routing.resources(app, controller_dir, "users", "tables, "stories", {}); // again, last param optional
 
-Resourse Routs will build the routes for stories, as a nested 
-resource for tables and users, and the params for the parent resources 
-will be included the request. 
+Resourse Routing will build the routes for stories, as a nested 
+resource for tables and users, and the request will include resource
+ids for the parent resourses.
 
 These are the routes that will get created with that method call:
 
