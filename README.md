@@ -107,4 +107,4 @@ Still a work in progress. Need to be able to:
 
 # LICENSE
 
-MIT. see (License)[./LICENSE]
+MIT. see [License](LICENSE)
