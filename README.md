@@ -8,6 +8,7 @@ npm install resource-routing --save
 
 # Usage
 
+## .resources(*)
 Resource Routes expects all your controllers to be in the same directory. A good recommendation is PROJECT_ROOT/controllers 
 or PROJECT_ROOT/app/controllers.
 
@@ -65,20 +66,20 @@ Will build the 14 standard restful routes for you:
 
 If the controller does not exist, the routes will not be created.
 
-If a specific expected attribute on the controller do not exist or is not a function, 
+If a specific expected attribute on the controller do not exist or is not a function,
 the relevant route will not get created.
 
 The functions should be defined as normal express request handlers:
 
     function(req, res) {};
 
-# nested resources
+### nested resources
 Nested resources are supported. By passing more than the minimum number of paramaters, the extra
 strings are assumed to be parent resources. For example, a call like:
 
     routing.resources(app, controller_dir, "users", "tables, "stories", {}); // again, last param optional
 
-Resourse Routing will build the routes for stories, as a nested 
+Resource Routing will build the routes for stories, as a nested
 resource for tables and users, and the request will include resource
 ids for the parent resourses.
 
@@ -99,15 +100,33 @@ These are the routes that will get created with that method call:
     DELETE  /users/:user_id/tables/:table_id/stories/:id               #=> StoriesController.destroy
     DELETE  /users/:user_id/tables/:table_id/stories/:id.format        #=> StoriesController.destroy
 
+## .expose_routing_table(app)
+
+If you have a lot of generated resource routes, you many want a handy way to see all the routes. Resource Routing
+give you a way to do this.
+
+    var express = require('express');
+    var app = express();
+    var routing = require('resource-routing');
+    routing.expose_routing_table(app);
+
+This enables a route handler at: `/routing-table` that will display an html table of all the
+internally generated routes. It does NOT include routes not added by resource-routing.
+
+Some users may want to conditionally enable it. (i.e. In development, but not in production);
+
+
 # TODO
 
-Still a work in progress. Need to be able to: 
+Still a work in progress. Need to be able to:
+
 * declare additional custom routes.
 * define namespaces
+* let user declare the route for the routing table
 * better error checking/validation
 
 # Authors
-* Steven Hilton <mshiltonj@gmail.com> @mshiltonj
+* Steven Hilton <mshiltonj@gmail.com> [@mshiltonj](http://twitter.com/mshiltonj]
 
 # LICENSE
 
