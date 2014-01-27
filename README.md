@@ -75,7 +75,7 @@ The functions should be defined as normal express request handlers:
 A fourth parameter, an options object, may be included. Several option attributes are recognized:
 
 
-# except
+### except
 
 An array of standard route names. These standard routes
 will not be created.
@@ -88,7 +88,7 @@ This will create six of the seven standard routes, but users
 will not be able to delete a resource.
 
 
-# only
+### only
 An array of standard route names. ONLY these standard routes
 will be created.
 
