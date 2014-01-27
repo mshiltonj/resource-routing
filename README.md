@@ -39,30 +39,29 @@ One:   The express ap object
 Two:   The app controllers directory.
 Three: The entity/class/model_name that will have restful routes.
 
-A fourth parameter, an options object, may be included, but is not yet referenced
 
-
-The simplest form:
+The simplest usage is:
 
     routing.resources(app, controller_dir, "users", {}); // last param optional
 
 
 Will build the 14 standard restful routes for you:
 
-    GET     /users                    #=> UsersController.index
-    GET     /users.format             #=> UsersController.index
-    GET     /users/new                #=> UsersController.new
-    GET     /users/new.format         #=> UsersController.new
-    POST    /users                    #=> UsersController.create
-    POST    /users.format             #=> UsersController.create
-    GET     /users/:id                #=> UsersController.show
-    GET     /users/:id.format         #=> UsersController.show
-    GET     /users/:id/edit           #=> UsersController.edit
-    GET     /users/:id/edit.format    #=> UsersController.edit
-    PUT     /users/:id                #=> UsersController.update
-    PUT     /users/:id.format         #=> UsersController.update
-    DELETE  /users/:id                #=> UsersController.destroy
-    DELETE  /users/:id.format         #=> UsersController.destroy
+    Method  URL                       Handler
+    GET     /users                    UsersController.index
+    GET     /users.format             UsersController.index
+    GET     /users/new                UsersController.new
+    GET     /users/new.format         UsersController.new
+    POST    /users                    UsersController.create
+    POST    /users.format             UsersController.create
+    GET     /users/:id                UsersController.show
+    GET     /users/:id.format         UsersController.show
+    GET     /users/:id/edit           UsersController.edit
+    GET     /users/:id/edit.format    UsersController.edit
+    PUT     /users/:id                UsersController.update
+    PUT     /users/:id.format         UsersController.update
+    DELETE  /users/:id                UsersController.destroy
+    DELETE  /users/:id.format         UsersController.destroy
 
 If the controller does not exist, the routes will not be created.
 
@@ -72,6 +71,46 @@ the relevant route will not get created.
 The functions should be defined as normal express request handlers:
 
     function(req, res) {};
+
+A fourth parameter, an options object, may be included. Several option attributes are recognized:
+
+### using:
+
+String value. Controller file. Overrides the automatic model-to-controller
+conversion (where passing in "users" will automatically try to load
+"users_controller") and let's you declare which controller you will be using.
+
+For example:
+
+    routing.resoures(app, controller_use, "users", { using: "members_controller" };
+
+Will create:
+
+    Method  URL                       Handler
+    get     /users                    members_controller.index
+    get     /users.:format            members_controller.index
+    get     /users/new                members_controller.new
+    get     /users/new.:format        members_controller.new
+    [etc]
+
+
+### prefix:
+
+String value. Url prefix. If defined, it is prepended to the generated url path. Useful
+for namespaces or url versioning:
+
+For example:
+
+    routing.resoures(app, controller_use, "users", { prefix: "api/1.0" };
+
+Will create:
+
+    Method  URL                       Handler
+    get     /api/1.0/users                    members_controller.index
+    get     /api/1.0/users.:format            members_controller.index
+    get     /api/1.0/users/new                members_controller.new
+    get     /api/1.0/users/new.:format        members_controller.new
+    [etc]
 
 ### nested resources
 Nested resources are supported. By passing more than the minimum number of paramaters, the extra
@@ -85,20 +124,21 @@ ids for the parent resourses.
 
 These are the routes that will get created with that method call:
 
-    GET     /users/:user_id/tables/:table_id/stories                   #=> StoriesController.index
-    GET     /users/:user_id/tables/:table_id/stories.format            #=> StoriesController.index
-    GET     /users/:user_id/tables/:table_id/stories/new               #=> StoriesController.new
-    GET     /users/:user_id/tables/:table_id/stories/new.format        #=> StoriesController.new
-    POST    /users/:user_id/tables/:table_id/stories                   #=> StoriesController.create
-    POST    /users/:user_id/tables/:table_id/stories.format            #=> StoriesController.create
-    GET     /users/:user_id/tables/:table_id/stories/:id               #=> StoriesController.show
-    GET     /users/:user_id/tables/:table_id/stories/:id.format        #=> StoriesController.show
-    GET     /users/:user_id/tables/:table_id/stories/:id/edit          #=> StoriesController.edit
-    GET     /users/:user_id/tables/:table_id/stories/:id/edit.format   #=> StoriesController.edit
-    PUT     /users/:user_id/tables/:table_id/stories/:id               #=> StoriesController.update
-    PUT     /users/:user_id/tables/:table_id/stories/:id.format        #=> StoriesController.update
-    DELETE  /users/:user_id/tables/:table_id/stories/:id               #=> StoriesController.destroy
-    DELETE  /users/:user_id/tables/:table_id/stories/:id.format        #=> StoriesController.destroy
+    Method  URL                                                        Handler
+    GET     /users/:user_id/tables/:table_id/stories                   StoriesController.index
+    GET     /users/:user_id/tables/:table_id/stories.format            StoriesController.index
+    GET     /users/:user_id/tables/:table_id/stories/new               StoriesController.new
+    GET     /users/:user_id/tables/:table_id/stories/new.format        StoriesController.new
+    POST    /users/:user_id/tables/:table_id/stories                   StoriesController.create
+    POST    /users/:user_id/tables/:table_id/stories.format            StoriesController.create
+    GET     /users/:user_id/tables/:table_id/stories/:id               StoriesController.show
+    GET     /users/:user_id/tables/:table_id/stories/:id.format        StoriesController.show
+    GET     /users/:user_id/tables/:table_id/stories/:id/edit          StoriesController.edit
+    GET     /users/:user_id/tables/:table_id/stories/:id/edit.format   StoriesController.edit
+    PUT     /users/:user_id/tables/:table_id/stories/:id               StoriesController.update
+    PUT     /users/:user_id/tables/:table_id/stories/:id.format        StoriesController.update
+    DELETE  /users/:user_id/tables/:table_id/stories/:id               StoriesController.destroy
+    DELETE  /users/:user_id/tables/:table_id/stories/:id.format        StoriesController.destroy
 
 ## .expose_routing_table(app)
 
@@ -121,7 +161,6 @@ Some users may want to conditionally enable it. (i.e. In development, but not in
 Still a work in progress. Need to be able to:
 
 * declare additional custom routes.
-* define namespaces
 * let user declare the route for the routing table
 * better error checking/validation
 
