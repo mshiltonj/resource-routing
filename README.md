@@ -74,6 +74,34 @@ The functions should be defined as normal express request handlers:
 
 A fourth parameter, an options object, may be included. Several option attributes are recognized:
 
+
+# except
+
+An array of standard route names. These standard routes
+will not be created.
+
+Example:
+
+    routing.resoures(app, controller_use, "users", { except: ["delete"] } };
+
+This will create six of the seven standard routes, but users
+will not be able to delete a resource.
+
+
+# only
+An array of standard route names. ONLY these standard routes
+will be created.
+
+Example:
+
+    routing.resoures(app, controller_use, "users", { only: ["index", "create"] } };
+
+This will suppress creation of the `new`, `create`,
+`update`, `edit`, and `delete` routes . In this case your resource
+will be only have read-only routes exposed.
+
+If `only` is included in the options, the `except` option is ignored.
+
 ### using:
 
 String value. Controller file. Overrides the automatic model-to-controller
@@ -178,7 +206,7 @@ MIT. see [License](LICENSE)
 # ChangeLog
 
 ## 0.0.1
-Initial Release
+* Initial Release
 
 ## 0.0.2
 * added routing-table html display
@@ -189,3 +217,7 @@ Initial Release
 * added options.prefix to .resources()
 * added options.at to .expose_routing_table()
 * fixed nested_resources
+
+## 0.0.4
+
+* updated README to include documetation of options.except and options.only for .resources()
