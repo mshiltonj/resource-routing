@@ -29,7 +29,7 @@ Requires express:
     // build your resource routing urls
     var routing = require('resource-routing');
     routing.resources(app, controller_dir, "users");
-    routing.resources(app, controller_dir, "users", "tables, "stories");
+    routing.resources(app, controller_dir, "users", "tables", "stories");
 
 That's it. You now have restful routing for users, and restful routing for stories that include a user_id and a table_id param.
 
