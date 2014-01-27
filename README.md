@@ -187,5 +187,5 @@ Initial Release
 
 * added options.using to .resources()
 * added options.prefix to .resources()
-* added options.as to .expose_routing_table()
+* added options.at to .expose_routing_table()
 * fixed nested_resources
