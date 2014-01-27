@@ -140,7 +140,7 @@ These are the routes that will get created with that method call:
     DELETE  /users/:user_id/tables/:table_id/stories/:id               StoriesController.destroy
     DELETE  /users/:user_id/tables/:table_id/stories/:id.format        StoriesController.destroy
 
-## .expose_routing_table(app)
+## .expose_routing_table(app, options)
 
 If you have a lot of generated resource routes, you many want a handy way to see all the routes. Resource Routing
 give you a way to do this.
@@ -150,8 +150,12 @@ give you a way to do this.
     var routing = require('resource-routing');
     routing.expose_routing_table(app);
 
-This enables a route handler at: `/routing-table` that will display an html table of all the
+This enables a route handler a default route of: `/routing-table` that will display an html table of all the
 internally generated routes. It does NOT include routes not added by resource-routing.
+
+You can override the location of the routing table by passing an 'at' attribute in the options object:
+
+    routing.expose_routing_table(app, { at: "/my-routes" });
 
 Some users may want to conditionally enable it. (i.e. In development, but not in production);
 
@@ -161,7 +165,6 @@ Some users may want to conditionally enable it. (i.e. In development, but not in
 Still a work in progress. Need to be able to:
 
 * declare additional custom routes.
-* let user declare the route for the routing table
 * better error checking/validation
 
 # Authors
@@ -170,3 +173,19 @@ Still a work in progress. Need to be able to:
 # LICENSE
 
 MIT. see [License](LICENSE)
+
+
+# ChangeLog
+
+## 0.0.1
+Initial Release
+
+## 0.0.2
+* added routing-table html display
+
+## 0.0.3
+
+* added options.using to .resources()
+* added options.prefix to .resources()
+* added options.as to .expose_routing_table()
+* fixed nested_resources
