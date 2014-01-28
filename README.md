@@ -187,6 +187,28 @@ You can override the location of the routing table by passing an 'at' attribute 
 
 Some users may want to conditionally enable it. (i.e. In development, but not in production);
 
+## Arbitrary routes (get, post, put, delete):
+
+You can declare all you routes through resource-routing, not just resources or restful routes.
+Resource routing provides a light wrapper around the traditional route express.js declaration.
+
+There are two reasons to do this:
+
+1. Consistency in declaring routes in your applications.
+1. Arbitrary routes declared through resource-routing are added to the routing table.
+
+Example:
+
+      routing.get(app, controller_dir, "/my_tables", "tables#index")
+
+Will generate:
+
+    Method    URL         Handler
+    get       /my_tables  tables.index
+
+The same restrictions for resource routes also apply here. If the controller cannot be found, the route is
+not created. If the controller action is not defined or is not a function, the route is not created.
+
 
 # TODO
 
@@ -221,3 +243,7 @@ MIT. see [License](LICENSE)
 ## 0.0.4
 
 * updated README to include documetation of options.except and options.only for .resources()
+
+## 0.0.5
+
+* can now declare arbitrary routes via resource-routing to get all routes into the routing table

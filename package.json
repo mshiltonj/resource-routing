@@ -1,8 +1,16 @@
 {
   "name": "resource-routing",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "building simple, easy restful routes for nodejs & expressjs",
-  "keywords": ["express","expressjs","restful","routes","routing","resource","resources"],
+  "keywords": [
+    "express",
+    "expressjs",
+    "restful",
+    "routes",
+    "routing",
+    "resource",
+    "resources"
+  ],
   "homepage": "https://github.com/mshiltonj/resource-routing",
   "repository": {
     "type": "git",
@@ -14,7 +22,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "inflector": "0.0.1"
+    "inflector": "0.0.1",
+    "methods": "~0.1.0"
   }
-
 }
