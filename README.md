@@ -291,9 +291,11 @@ MIT. see [License](LICENSE)
 # ChangeLog
 
 ## 0.0.1
+
 * Initial Release
 
 ## 0.0.2
+
 * added routing-table html display
 
 ## 0.0.3
@@ -312,5 +314,6 @@ MIT. see [License](LICENSE)
 * can now declare arbitrary routes via resource-routing to get all routes into the routing table
 
 ## 0.0.6
+
 * Fixed some documentation errors
 * Added ability to declare custom resource methods via member: and collection: options on the resources() method.
