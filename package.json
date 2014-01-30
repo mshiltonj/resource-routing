@@ -1,7 +1,7 @@
 {
   "name": "resource-routing",
   "version": "0.0.5",
-  "description": "Building simple, easy restful routes for nodejs & expressjs with a viewable routing table",
+  "description": "Building simple, easy restful routes for nodejs & expressjs, with a viewable routing table",
   "keywords": [
     "express",
     "expressjs",

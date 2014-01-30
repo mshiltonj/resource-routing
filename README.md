@@ -1,6 +1,6 @@
 # Resource Routing
 
-Easily build routes for an express.js web app. Inspired a little by rails.
+Building simple, easy restful routes for nodejs & expressjs, with a viewable routing table
 
 # Installation
 
@@ -12,11 +12,15 @@ npm install resource-routing --save
 Resource Routes expects all your controllers to be in the same directory. A good recommendation is PROJECT_ROOT/controllers 
 or PROJECT_ROOT/app/controllers.
 
-Resource Routes expects all and to be named like foos_controller.js
-For example, if you have a User resource or model you want to manage. Resource Routes expects you to manage it
-with a users_controller.js file. If they don't match this convetion, they may not be found.
+Resource Routes expects all controller to be named with common convention of [entities]_controller.js,
+like 'posts_controller.rb' or 'comments_controller.rb'
 
-Requires express:
+For example, if you have a User resource or model you want to manage. Resource Routes expects you to manage it
+with a users_controller.js file. If they don't match this convention, they may not be found.
+
+Resource Routes depends on the express.js engine.
+
+Example usage:
 
     // get your app
     var express = require('express');
@@ -29,11 +33,10 @@ Requires express:
     // build your resource routing urls
     var routing = require('resource-routing');
     routing.resources(app, controller_dir, "users");
-    routing.resources(app, controller_dir, "users", "tables", "stories");
 
-That's it. You now have restful routing for users, and restful routing for stories that include a user_id and a table_id param.
+That's it. You now have restful routing for users.
 
-The resources() function takes a minimum of three paramaters:
+The resources() function takes a minimum of three parameters:
 
 One:   The express ap object
 Two:   The app controllers directory.
@@ -45,23 +48,23 @@ The simplest usage is:
     routing.resources(app, controller_dir, "users", {}); // last param optional
 
 
-Will build the 14 standard restful routes for you:
+This will build the 14 standard restful routes for you:
 
     Method  URL                       Handler
-    GET     /users                    UsersController.index
-    GET     /users.format             UsersController.index
-    GET     /users/new                UsersController.new
-    GET     /users/new.format         UsersController.new
-    POST    /users                    UsersController.create
-    POST    /users.format             UsersController.create
-    GET     /users/:id                UsersController.show
-    GET     /users/:id.format         UsersController.show
-    GET     /users/:id/edit           UsersController.edit
-    GET     /users/:id/edit.format    UsersController.edit
-    PUT     /users/:id                UsersController.update
-    PUT     /users/:id.format         UsersController.update
-    DELETE  /users/:id                UsersController.destroy
-    DELETE  /users/:id.format         UsersController.destroy
+    GET     /users                    users_controller.index
+    GET     /users.format             users_controller.index
+    GET     /users/new                users_controller.new
+    GET     /users/new.format         users_controller.new
+    POST    /users                    users_controller.create
+    POST    /users.format             users_controller.create
+    GET     /users/:id                users_controller.show
+    GET     /users/:id.format         users_controller.show
+    GET     /users/:id/edit           users_controller.edit
+    GET     /users/:id/edit.format    users_controller.edit
+    PUT     /users/:id                users_controller.update
+    PUT     /users/:id.format         users_controller.update
+    DELETE  /users/:id                users_controller.destroy
+    DELETE  /users/:id.format         users_controller.destroy
 
 If the controller does not exist, the routes will not be created.
 
@@ -72,35 +75,79 @@ The functions should be defined as normal express request handlers:
 
     function(req, res) {};
 
-A fourth parameter, an options object, may be included. Several option attributes are recognized:
-
+A fourth parameter, an options object, may be included to add or restrict route creation.
+Several option attributes are recognized:
 
 ### except
 
 An array of standard route names. These standard routes
-will not be created.
+will not be excluded from the route creation process.
 
 Example:
 
-    routing.resoures(app, controller_use, "users", { except: ["delete"] } };
+    routing.resources(app, controller_use, "users", { except: ["delete"] } };
 
-This will create six of the seven standard routes, but users
-will not be able to delete a resource.
+This will create six of the seven standard routes, plus their `.format` variants, but the `delete` route
+will not be created.
 
 
 ### only
 An array of standard route names. ONLY these standard routes
-will be created.
+will be created. Standard routes not included in this list will be excluded
+from the route creation process.
 
 Example:
 
-    routing.resoures(app, controller_use, "users", { only: ["index", "create"] } };
+    routing.resources(app, controller_use, "users", { only: ["index", "create"] } };
 
 This will suppress creation of the `new`, `create`,
-`update`, `edit`, and `delete` routes . In this case your resource
+`update`, `edit`, and `delete` routes . In this case your user resource
 will be only have read-only routes exposed.
 
 If `only` is included in the options, the `except` option is ignored.
+
+### member
+
+If you need add additional custom member routes, you can declare them with the `member`
+options attribute. It takes an array of arrays, where each of the sub-arrays is
+two or three elements.
+
+* The first element is the http method (get, post, put, delete)
+* The second elements is the url_part to be appended to the entity root url
+* The third element, if included, is the controller action to handle the request. If the third element
+is not defined, it will look for a controller action of the same name as the url part
+
+Example:
+
+    routing.resources(app, controller_dir, "users", {member:[
+      ["get", "foo", "bar"],
+      ["get", "baz"]
+    ]});
+
+Will generate (in addition to the regular routes:
+
+    Method  URL                       Handler
+    get     /users/:id/foo            users_controller.bar
+    get     /users/:id/foo.:format    users_controller.bar
+    get     /users/:id/baz            users_controller.baz
+    get     /users/:id/baz.:format    users_controller.baz
+
+### collection
+If you need additional custom collection routes, you can declare them with the `collection`
+options attribute. It works the same way as the member attribute, but the base url used does not include :id.
+Instead it uses the general controller url.
+
+Example:
+
+    routing.resources(app, controller_dir, "users", {collection: [
+      ["get", "reset_request", "reset"]
+    ]});
+
+Will generate:
+
+    Method    URL                           Handler
+    get       /users/reset_request          users_controller.reset
+    get       /users/reset_request.:format  users_controller.reset
 
 ### using:
 
@@ -110,7 +157,7 @@ conversion (where passing in "users" will automatically try to load
 
 For example:
 
-    routing.resoures(app, controller_use, "users", { using: "members_controller" };
+    routing.resources(app, controller_use, "users", { using: "members_controller" };
 
 Will create:
 
@@ -129,7 +176,7 @@ for namespaces or url versioning:
 
 For example:
 
-    routing.resoures(app, controller_use, "users", { prefix: "api/1.0" };
+    routing.resources(app, controller_use, "users", { prefix: "api/1.0" };
 
 Will create:
 
@@ -140,7 +187,7 @@ Will create:
     get     /api/1.0/users/new.:format        members_controller.new
     [etc]
 
-### nested resources
+### declaring nested resources
 Nested resources are supported. By passing more than the minimum number of paramaters, the extra
 strings are assumed to be parent resources. For example, a call like:
 
@@ -168,9 +215,17 @@ These are the routes that will get created with that method call:
     DELETE  /users/:user_id/tables/:table_id/stories/:id               StoriesController.destroy
     DELETE  /users/:user_id/tables/:table_id/stories/:id.format        StoriesController.destroy
 
+NOTE: None of the parent resource routes gets create. They will need their one resource call to have them defined,
+like so:
+
+    routing.resources(app, controller_dir, "users");
+    routing.resources(app, controller_dir, "users", "tables");
+    routing.resources(app, controller_dir, "users", "tables, "stories");
+
+
 ## .expose_routing_table(app, options)
 
-If you have a lot of generated resource routes, you many want a handy way to see all the routes. Resource Routing
+If you have a lot of generated resource routes, you many want or need a convenient way to see all the routes. Resource Routing
 give you a way to do this.
 
     var express = require('express');
@@ -178,43 +233,51 @@ give you a way to do this.
     var routing = require('resource-routing');
     routing.expose_routing_table(app);
 
-This enables a route handler a default route of: `/routing-table` that will display an html table of all the
+This enables a display of the routing table at a default location of: `/routing-table`. This display an html table of all the
 internally generated routes. It does NOT include routes not added by resource-routing.
 
 You can override the location of the routing table by passing an 'at' attribute in the options object:
 
     routing.expose_routing_table(app, { at: "/my-routes" });
 
-Some users may want to conditionally enable it. (i.e. In development, but not in production);
+Some users may want to conditionally enable it. (i.e. in development, but not in production);
 
 ## Arbitrary routes (get, post, put, delete):
 
-You can declare all you routes through resource-routing, not just resources or restful routes.
-Resource routing provides a light wrapper around the traditional route express.js declaration.
+You can declare all arbitrary non-restful routes through the resource-routing interface.
 
 There are two reasons to do this:
 
 1. Consistency in declaring routes in your applications.
 1. Arbitrary routes declared through resource-routing are added to the routing table.
 
+Resource routing provides a light wrapper around the traditional route express.js declaration.
+
+
 Example:
 
-      routing.get(app, controller_dir, "/my_tables", "tables#index")
+Instead of doing this:
 
-Will generate:
+    var tables_controller = require("./controllers/tables_controller");
+    app.get("/my_tables", table_controller.index")
 
-    Method    URL         Handler
-    get       /my_tables  tables.index
+Do this:
+
+    routing.get(app, controller_dir, "/my_tables", "tables#index")
+
+It will generate the expected routes:
+
+    Method    URL                 Handler
+    get       /my_tables          tables.index
+    get       /my_tables.:format  tables.index
 
 The same restrictions for resource routes also apply here. If the controller cannot be found, the route is
 not created. If the controller action is not defined or is not a function, the route is not created.
 
-
 # TODO
 
 Still a work in progress. Need to be able to:
-
-* declare additional custom routes.
+* a way to declare a wrapper function / closure construct for all router handlers.
 * better error checking/validation
 
 # Authors
@@ -223,7 +286,6 @@ Still a work in progress. Need to be able to:
 # LICENSE
 
 MIT. see [License](LICENSE)
-
 
 # ChangeLog
 
@@ -247,3 +309,7 @@ MIT. see [License](LICENSE)
 ## 0.0.5
 
 * can now declare arbitrary routes via resource-routing to get all routes into the routing table
+
+## 0.0.6
+* Fixed some documentation errors
+* Added ability to declare custom resource methods via member: and collection: options on the resources() method.
