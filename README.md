@@ -34,7 +34,7 @@ Example usage:
     var routing = require('resource-routing');
     routing.resources(app, controller_dir, "users");
 
-That's it. You now have restful routing for users.
+That's it. You now have restful routing for your User model.
 
 The resources() function takes a minimum of three parameters:
 
