@@ -307,7 +307,6 @@ not created. If the controller action is not defined or is not a function, the r
 
 Still a work in progress. Need to be able to:
 
-* a way to declare a wrapper function / closure construct for all router handlers.
 * better error checking/validation
 
 # Authors
