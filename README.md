@@ -242,6 +242,35 @@ You can override the location of the routing table by passing an 'at' attribute 
 
 Some users may want to conditionally enable it. (i.e. in development, but not in production);
 
+## .set_handler_wrapper(func)
+
+When generating routes, Resource Routing sets up a closure for dispatching your request handlers.
+The default implementation is:
+
+    function(handler, req, res){
+      handler(req, res);
+    }
+
+The `handler` here is your controller action. The default closure does anything, it just
+passes the request through.
+
+But you can override this, providing your own closure do whatever you want:
+
+    routing.set_wrapper(function(handler, req, res){
+      console.log("CUSTOM WRAPPER");
+      var options = { extra_data: "example"};
+      handler(req, res, options);
+    })
+
+You can define you own controller action method signature (making sure your controller actions
+implement the signature), set up some global logging or metrics. It's up to you.
+
+NOTE: Async coding practices with callback handlers make come into play here.
+
+## .reset_handler_wrapper()
+
+This resets the handler wrapper back to the default, non-additive closure.
+
 ## Arbitrary routes (get, post, put, delete):
 
 You can declare all arbitrary non-restful routes through the resource-routing interface.
@@ -317,3 +346,7 @@ MIT. see [License](LICENSE)
 
 * Fixed some documentation errors
 * Added ability to declare custom resource methods via member: and collection: options on the resources() method.
+
+## 0.0.7
+
+* Added handler wrapper for executing custom setup code on every request.
