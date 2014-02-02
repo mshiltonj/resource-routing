@@ -318,13 +318,26 @@ MIT. see [License](LICENSE)
 
 # ChangeLog
 
-## 0.0.1
+## 0.0.8 
 
-* Initial Release
+* Reorder route creation so .:format urls get hit first
 
-## 0.0.2
+## 0.0.7
 
-* added routing-table html display
+* Added handler wrapper for executing custom setup code on every request.
+
+## 0.0.6
+
+* Fixed some documentation errors
+* Added ability to declare custom resource methods via member: and collection: options on the resources() method.
+
+## 0.0.5
+
+* can now declare arbitrary routes via resource-routing to get all routes into the routing table
+
+## 0.0.4
+
+* updated README to include documetation of options.except and options.only for .resources()
 
 ## 0.0.3
 
@@ -333,19 +346,12 @@ MIT. see [License](LICENSE)
 * added options.at to .expose_routing_table()
 * fixed nested_resources
 
-## 0.0.4
+## 0.0.2
 
-* updated README to include documetation of options.except and options.only for .resources()
+* added routing-table html display
 
-## 0.0.5
+## 0.0.1
 
-* can now declare arbitrary routes via resource-routing to get all routes into the routing table
+* Initial Release
 
-## 0.0.6
 
-* Fixed some documentation errors
-* Added ability to declare custom resource methods via member: and collection: options on the resources() method.
-
-## 0.0.7
-
-* Added handler wrapper for executing custom setup code on every request.
