@@ -40,7 +40,7 @@ Example usage:
     
     // get your controller path. NOTE: resolve to full path
     var path = require('path');
-    var controller_dir = path.resolve(./controllers");
+    var controller_dir = path.resolve("./controllers");
     
     // build your resource routing urls
     var routing = require('resource-routing');
