@@ -1,5 +1,5 @@
 {
-  "name": "resource-routing",
+  "name": "express-resource-routing",
   "version": "0.1.1",
   "description": "Building simple, easy restful routes for nodejs & expressjs, with a viewable routing table",
   "keywords": [
@@ -11,10 +11,10 @@
     "resource",
     "resources"
   ],
-  "homepage": "https://github.com/mshiltonj/resource-routing",
+  "homepage": "https://github.com/fengzhu/resource-routing.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mshiltonj/resource-routing"
+    "url": "https://github.com/fengzhu/resource-routing.git"
   },
   "author": {
     "name": "Steven Hilton",
