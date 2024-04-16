@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "nodenext",
+    "sourceMap": true,
+    "outDir": "dist",
+    "alwaysStrict": true,
+    "strict": true
+
+  },
+  "include": ["./src/**/*.ts"],
+  "lib": ["es2015"]
+}

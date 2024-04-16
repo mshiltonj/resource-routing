@@ -16,7 +16,7 @@ Resource routing provides:
 
 # Installation
 
-npm install resource-routing --save
+yarn add resource-routing
 
 # Usage
 
@@ -50,7 +50,7 @@ That's it. You now have restful routing for your User model.
 
 The resources() function takes a minimum of three parameters:
 
-1. The express ap object
+1. The express app object
 2. The app controllers directory.
 3. The entity/class/model_name, in pluralized form, that will have restful routes.
 
@@ -60,7 +60,7 @@ The simplest usage is:
     routing.resources(app, controller_dir, "users", {}); // last param optional
 
 
-This will build the 14 standard restful routes for you:
+This will build the 18 standard restful routes for you:
 
     Method  URL                       Handler
     GET     /users                    users_controller.index
@@ -74,7 +74,11 @@ This will build the 14 standard restful routes for you:
     GET     /users/:id/edit           users_controller.edit
     GET     /users/:id/edit.format    users_controller.edit
     PUT     /users/:id                users_controller.update
+    POST    /users/:id                users_controller.update
+    PATCH   /users/:id                users_controller.update
     PUT     /users/:id.format         users_controller.update
+    POST    /users/:id.format         users_controller.update
+    PATCH   /users/:id.format         users_controller.update
     DELETE  /users/:id                users_controller.destroy
     DELETE  /users/:id.format         users_controller.destroy
 
