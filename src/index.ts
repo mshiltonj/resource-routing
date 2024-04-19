@@ -1,2 +1,2 @@
-import ResourceRouting from './lib/resource-routing'
-export default ResourceRouting
+import ResourceRouting from "./lib/resource-routing";
+export default ResourceRouting;

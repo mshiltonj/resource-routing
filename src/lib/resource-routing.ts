@@ -135,10 +135,8 @@ function getUsedRoutes(options: ResourceOptions | null | undefined){
 
   let actionsToUse : string[] = Array.from(standardRoutes.keys())
 
-  console.log("options: ", options)
 
   if (options.only){
-    console.log("only: ", options.only)
     actionsToUse = actionsToUse.filter(function(action){
       if (! options.only){
         return true;
@@ -146,7 +144,6 @@ function getUsedRoutes(options: ResourceOptions | null | undefined){
       return options.only.indexOf(action) >= 0;
     })
   } else if(options.except) {
-    console.log("except: ", options.except)
     actionsToUse = actionsToUse.filter(function(action){
       if (! options.except){
         return false;
@@ -155,7 +152,6 @@ function getUsedRoutes(options: ResourceOptions | null | undefined){
     })
   }
 
-  console.log("actionsToUse: ", actionsToUse)
   return actionsToUse;
 }
 
