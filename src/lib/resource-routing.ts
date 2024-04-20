@@ -85,6 +85,8 @@ type ResourceOptions = {
   options?: ControllerOptions,
   except?: string[],
   only?: string[],
+  prefix?: string,
+  using?: string,
   memberActions?: CustomRouteDefinition[],
   collectionActions?: CustomRouteDefinition[]
 }
@@ -290,6 +292,8 @@ class ResourceRouter {
     buildRoute(app, ["GET"], "/index", controllerData, action);
   }
 
+  // TODO: add support for 'prefix' option
+  // TODO: add support for 'using' option
   static resources = function(app : express.Application, controllerDir: string, entities: string | string[], options?: ResourceOptions){
     let entitiesArray = Array.isArray(entities) ? entities : [entities];
 

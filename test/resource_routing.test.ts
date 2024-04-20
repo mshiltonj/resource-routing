@@ -276,4 +276,10 @@ describe("Resource Routing", () => {
       expect(res.text).toBe("Users MultiEdit Page");
     });
   });
+
+  // TODO: 
+  //   * test for custom routes with only and except combinded,
+  //     except option should be ignored
+  //   * test for undefined controller
+  //   * test for undefined action
 });
