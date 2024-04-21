@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "module": "node16",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es6",
     "esModuleInterop": true,
-    "target": "esnext",
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",

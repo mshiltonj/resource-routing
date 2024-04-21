@@ -3,3 +3,4 @@ node_modules
 dist
 integration/node_modules
 resource-routing*.tgz
+yarn-error.log

@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2",
-    "resource-routing": "../resource-routing-v0.2.0.tgz"
+    "express": "^4.19.2"
   }
 }

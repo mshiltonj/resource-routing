@@ -1,0 +1,25 @@
+name: Push to feature branch
+on:
+  push:
+    branches:
+      - feature/*
+  pull_request:
+    branches:
+      - feature/*
+jobs:
+  unit-tests:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: 
+          node-version: '20'        
+      - name: Intall yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn install
+      - name: Run unit tests
+        run: yarn test
+      - name: Run integration test
+        run: yarn integration

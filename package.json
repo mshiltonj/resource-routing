@@ -26,7 +26,11 @@
     "name": "Steven Hilton",
     "email": "mshiltonj@gmail.com"
   },
-  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./lib/resource-routing": "./dist/lib/resource-routing.js",
+    "./lib/types": "./dist/lib/types.js"
+  },
   "files": [
     "README.md",
     "LICENSE",
