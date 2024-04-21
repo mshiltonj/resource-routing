@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "node16",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "esnext",
     "declaration": true,
-    "moduleResolution": "bundler",
     "sourceMap": true,
     "outDir": "dist",
     "alwaysStrict": true,
     "strict": true
-
   },
   "include": ["./src/**/*.ts"],
   "lib": ["es2015"]

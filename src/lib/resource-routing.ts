@@ -40,16 +40,16 @@ const DEFAULT_RESTFUL_ROUTES : Map<string, RouteDefinition> = new Map([
   }]
 ])
 
-
-
 class ResourceRouter {
   app: express.Application
   controllerDir: string
+  extension: string
   routingTable : RoutingTableEntry[] = [];
 
-  constructor (app: express.Application, controllerDir: string){
+  constructor(app: express.Application, controllerDir: string, extension: string = 'js'){
     this.app = app;
     this.controllerDir = controllerDir;
+    this.extension = extension
   }
 
   async root(controller: string, action: string){
@@ -194,11 +194,16 @@ class ResourceRouter {
     let controllerData : ControllerData = {};  
     
     try {
-      controllerData.file = (using ? using : entity) + "_controller";
+      controllerData.file = (using ? using : entity) + "_controller"
+      
+      if (this.extension && this.extension !== ''){
+        controllerData.file += "." + this.extension;
+      }
 
       // TODO// dynamic import
       controllerData.module = (await import(path.join(this.controllerDir, controllerData.file))).default;
     } catch(error) {
+      console.log(error)
       throw new Error(`${controllerData.file} could not be loaded`);
     }
     return controllerData;
@@ -293,8 +298,8 @@ class ResourceRouter {
   }
 }
 
-export default ResourceRouter
-
 export {
   CustomRouteDefinition
 }
+
+export default ResourceRouter

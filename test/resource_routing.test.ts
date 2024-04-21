@@ -1,4 +1,4 @@
-import Router from "../src/";
+import Router from "../src";
 import request from "supertest";
 import express from "express";
 import path from "path";
@@ -9,9 +9,9 @@ describe("Resource Router", () => {
   const controllerDir = path.resolve(__dirname, "./fixtures/controllers");
   let app: express.Application;
 
-  test("defining root route", async () => {
+  test("defining root route NOPE", async () => {
     app = express();
-    const router = new Router(app, controllerDir);
+    const router = new Router(app, controllerDir, '');
     await router.root("index", "home");
     const res = await request(app).get("/");
     // console.log(res)
@@ -22,7 +22,7 @@ describe("Resource Router", () => {
   describe("defining standard routes", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users");
     });
 
@@ -118,7 +118,7 @@ describe("Resource Router", () => {
   describe("defining standard routes with using", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", { using: "members" });
     });
 
@@ -170,7 +170,7 @@ describe("Resource Router", () => {
   describe("defining standard routes with prefix", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", { prefix: "/api/v1", except: ["new", "edit"]});
     });
 
@@ -226,7 +226,7 @@ describe("Resource Router", () => {
   describe("defining standard routes with except", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", { except: ["destroy"] });
     });
 
@@ -288,7 +288,7 @@ describe("Resource Router", () => {
   describe("defining standard routes with only", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", {only: ["index", "show"],});
     });
 
@@ -334,7 +334,7 @@ describe("Resource Router", () => {
   describe("defining nested routes", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources(["users", "posts"]);
     });
 
@@ -386,7 +386,7 @@ describe("Resource Router", () => {
   describe("defining custom routes", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", {
         memberActions: [
           { method: "GET", action: "refresh" },
@@ -419,7 +419,7 @@ describe("Resource Router", () => {
   describe("defining route with missing controller", () => {
     test("should raise exception", async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       expect(async () => await router.resources("books")).rejects.toThrow("books_controller could not be loaded");
     });
   });
@@ -427,7 +427,7 @@ describe("Resource Router", () => {
   describe("ad hoc routes", () => {
     test("should define get route", async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.get("/login", "sessions#login")
       const res = await request(app).get("/login");
       expect(res.status).toBe(200);
@@ -436,7 +436,7 @@ describe("Resource Router", () => {
 
     test("should define post route", async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.post("/logout", "sessions#logout")
       const res = await request(app).post("/logout");
       expect(res.status).toBe(200);
@@ -447,7 +447,7 @@ describe("Resource Router", () => {
   describe("defining route with missing controller action", () => {
     test("should raise exception", async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       expect(async () => await router.resources("users", { memberActions: [{method: "GET", action: "doesNotExist"}]} )).rejects.toThrow("users_controller.doesNotExist is not a function");
     });
   });
@@ -455,7 +455,7 @@ describe("Resource Router", () => {
   describe("exposeRouterTable enabled", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", {
         memberActions: [
           { method: "GET", action: "refresh" },
@@ -469,21 +469,21 @@ describe("Resource Router", () => {
     test("should display defined routes in html", async () => {
       const res = await request(app).get("/routingTable.html");
       // TODO: check for defined routes
-      console.log(res.text)
+      // console.log(res.text)
       expect(res.status).toBe(200);
     })
 
     test("should display defined routes in text", async () => {
       const res = await request(app).get("/routingTable.txt");
       // TODO: check for defined routes
-      console.log(res.text)
+      // console.log(res.text)
       expect(res.status).toBe(200);
     })
 
     test("should display defined routes in json", async () => {
       const res = await request(app).get("/routingTable.json");
       // TODO: check for defined routes
-      console.log(res.text)
+      // console.log(res.text)
       expect(res.status).toBe(200);
     })
 
@@ -492,7 +492,7 @@ describe("Resource Router", () => {
   describe("exposeRouterTable enabled at custom route", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", {
         memberActions: [
           { method: "GET", action: "refresh" },
@@ -514,7 +514,7 @@ describe("Resource Router", () => {
   describe("exposeRouterTable not enabled", () => {
     beforeEach(async () => {
       app = express();
-      const router = new Router(app, controllerDir);
+      const router = new Router(app, controllerDir, '');
       await router.resources("users", {
         memberActions: [
           { method: "GET", action: "refresh" },
