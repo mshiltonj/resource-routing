@@ -165,7 +165,8 @@ class ResourceRouter {
 
   private buildRoute(methods: HttpMethod[], url: string, controllerData : ControllerData, action: string){
     if (controllerData.module && controllerData.file){
-      const controllerDataStrict = controllerData as ControllerDataStrict;    
+      const controllerDataStrict = controllerData as ControllerDataStrict;
+      
       let handler = controllerData.module[action];
 
       if (typeof handler !== 'function'){
@@ -200,8 +201,15 @@ class ResourceRouter {
         controllerData.file += "." + this.extension;
       }
 
-      // TODO// dynamic import
-      controllerData.module = (await import(path.join(this.controllerDir, controllerData.file))).default;
+      // slight import difference between es6 and commonjs
+      const module_candidate = (await import(path.join(this.controllerDir, controllerData.file))).default
+      if (["object", "function"].includes(typeof module_candidate.default)){
+        controllerData.module = module_candidate.default
+      }
+      else{
+        controllerData.module = module_candidate
+      }
+      
     } catch(error) {
       console.log(error)
       throw new Error(`${controllerData.file} could not be loaded`);

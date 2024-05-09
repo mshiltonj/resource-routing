@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "target": "es6",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",

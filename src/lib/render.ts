@@ -1,4 +1,4 @@
-import { RoutingTableEntry } from "./types"
+import { RoutingTableEntry } from "./types.js"
 import Table from 'easy-table'
 
 function stripIdPattern(urlPath: string): string {  

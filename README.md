@@ -1,6 +1,6 @@
 # Resource Routing
 
-The Resource Routing package provides a way to build simple, easy restful routes for nodejs & expressjs, with a viewable routing table.
+The Resource Routing package provides a way to a build simple, easy restful route suite for nodejs & expressjs, with a viewable routing table.
 
 # Summary
 
@@ -8,13 +8,15 @@ Resource Routing provides:
 
 * A simple, easy method for generating restful routes for a model
 * Viewable routing table
-* warnings if the expected controller or controller function does not exist
-* Ways to customize, override and extend the generated restful routes
-* The same interface for creating non-restful routes, so you don't have to build routes in different ways.
+* Customize, override and extend the default restful routes
+* Opt-in interface for creating non-restful routes, so you don't have to build routes in different ways.
 * Easy declaration of your "root" or "home" route.
-* Optional definition of a global "wrapper" function around all the routes for universal request handling setup.
 
 # Installation
+
+    npm install resource-routing
+
+or 
 
     yarn add resource-routing
 

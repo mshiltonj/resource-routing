@@ -1,6 +1,7 @@
 {
   "name": "resource-routing",
   "version": "0.2.0",
+  "type": "module",
   "description": "Building simple, easy restful routes for nodejs & expressjs, with a viewable routing table",
   "keywords": [
     "express",
@@ -15,7 +16,9 @@
     "lint": "eslint src",
     "test": "jest",
     "integration": "./integration/test.sh",
-    "build": "tsc"
+    "build": "$npm_execpath run build:esm && $npm_execpath run build:cjs",
+    "build:cjs": "tsc --target esnext --module commonjs --moduleResolution node --outDir dist/cjs && ./bin/dist-fixup.sh cjs",
+    "build:esm": "tsc --target esnext --module esnext --moduleResolution node --outDir dist/esm && ./bin/dist-fixup.sh esm"
   },
   "homepage": "https://github.com/mshiltonj/resource-routing",
   "repository": {
@@ -26,10 +29,12 @@
     "name": "Steven Hilton",
     "email": "mshiltonj@gmail.com"
   },
-  "exports": {
-    ".": "./dist/index.js",
-    "./lib/resource-routing": "./dist/lib/resource-routing.js",
-    "./lib/types": "./dist/lib/types.js"
+  "exports": {    
+    ".": {
+      "types": "./dist/*.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }  
   },
   "files": [
     "README.md",

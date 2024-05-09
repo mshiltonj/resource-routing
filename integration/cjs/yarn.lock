@@ -394,9 +394,9 @@ raw-body@2.5.2:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-resource-routing@../resource-routing-v0.2.0.tgz:
+resource-routing@../../resource-routing-v0.2.0.tgz:
   version "0.2.0"
-  resolved "../resource-routing-v0.2.0.tgz#65f4ff1ed39c1b41b37c58df17ebbb8b9b892193"
+  resolved "../../resource-routing-v0.2.0.tgz#eead9ab479b1d18dbf52de588374876b4489fee8"
   dependencies:
     easy-table "^1.2.0"
     inflected "^2.1.0"
