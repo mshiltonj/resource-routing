@@ -23,12 +23,23 @@ or
 # Usage
 Create a new router for your app:
 
+## ESM
     import express from "express"
     import path from "path";
     import Router from "resource-routing"
+
+    const app = express()
+    const controllerDir = path.resolve("./controllers", 'js')
+    const router = new Router(app, controllerDir)
+
+## CJS
+    const express = require('express')
+    const path = require('path')
+    const Router = require('resource-routing').default // NOTE THE .default here
+
     const app = express()
     const controllerDir = path.resolve("./controllers")
-    const router = new Router(app, controllerDir)
+    const router = new Router(app, controllerDir, 'js')
 
 The router expects all controllers to be in the same directory. A good recommendation is `PROJECT_ROOT/controllers` or `PROJECT_ROOT/app/controllers`.
 
@@ -78,7 +89,6 @@ If the expected controller function does not exist, it will raise an error on st
 The functions should be defined as normal express request handlers with request and response parameters:
 
     function(req, res) {};
-
 
 The `options` parameter recognizes these keys:
 

@@ -9,5 +9,5 @@ const router = new Router(app, controllerDir, 'js')
 router.root("index", "home")
 router.resources("users")
 
-app.listen(3000, "0.0.0.0")
+app.listen(8888, "0.0.0.0")
 

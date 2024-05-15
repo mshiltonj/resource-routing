@@ -396,7 +396,7 @@ raw-body@2.5.2:
 
 resource-routing@../../resource-routing-v0.2.0.tgz:
   version "0.2.0"
-  resolved "../../resource-routing-v0.2.0.tgz#ac974700334d243f3d1a03daeb015b4a261a256a"
+  resolved "../../resource-routing-v0.2.0.tgz#7df98afcff236361da2b04c454f8d0416eab12c0"
   dependencies:
     easy-table "^1.2.0"
     inflected "^2.1.0"
