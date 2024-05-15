@@ -197,12 +197,21 @@ class ResourceRouter {
     try {
       controllerData.file = (using ? using : entity) + "_controller"
       
-      if (this.extension && this.extension !== ''){
-        controllerData.file += "." + this.extension;
+      let module_candidate;
+
+      // try without extension first
+      try {
+        module_candidate = (await import(path.join(this.controllerDir, controllerData.file))).default
+      } catch (error){
+        if (this.extension && this.extension !== ''){
+          controllerData.file += "." + this.extension;
+        } else {
+          throw error;
+        }
+        module_candidate = (await import(path.join(this.controllerDir, controllerData.file))).default
       }
 
       // slight import difference between es6 and commonjs
-      const module_candidate = (await import(path.join(this.controllerDir, controllerData.file))).default
       if (["object", "function"].includes(typeof module_candidate.default)){
         controllerData.module = module_candidate.default
       }

@@ -29,7 +29,7 @@ Create a new router for your app:
     import Router from "resource-routing"
 
     const app = express()
-    const controllerDir = path.resolve("./controllers", 'js')
+    const controllerDir = path.resolve("./controllers")
     const router = new Router(app, controllerDir)
 
 ## CJS
@@ -39,12 +39,14 @@ Create a new router for your app:
 
     const app = express()
     const controllerDir = path.resolve("./controllers")
-    const router = new Router(app, controllerDir, 'js')
+    const router = new Router(app, controllerDir)
 
 The router expects all controllers to be in the same directory. A good recommendation is `PROJECT_ROOT/controllers` or `PROJECT_ROOT/app/controllers`.
 
+The Router constructor has a second, optional parameter to specify a filer extension. Its value could be, for example, `js`, `ts`, `cjs`, `mjs`, etc. The default is `js`. It is difficult to predict what the file exension may be in varied enviromnents with transpiling and different module types. When loading a file, we first to load the file *without* a file extension. If that fails, we try *with* the file extension. If that fails, we raise an error.
+
 ## .resources(entity | entity[], options?)
-The router expects all controllers to be named with common convention of [entities]_controller.js, like `posts_controller.rb` or `comments_controller.rb`
+The router expects all controllers to be named with common convention of [entities]_controller.js, like `posts_controller.js` or `comments_controller.js`
 
 The router depends on the express.js engine.
 
