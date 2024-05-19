@@ -1,3 +1,7 @@
-.idea
-resource-routing.iml
+docker-compose.override.yml
 node_modules
+dist
+integration/esm/node_modules
+integration/cjs/node_modules
+resource-routing*.tgz
+yarn-error.log

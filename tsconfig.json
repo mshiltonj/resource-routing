@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "alwaysStrict": true,
+    "strict": true
+  },
+  "include": ["./src/**/*.ts"],
+  "lib": ["es2015"]
+}
